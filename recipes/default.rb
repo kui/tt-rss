@@ -79,28 +79,3 @@ execute "set permissions" do
   command "chown -R #{node['apache']['user']}.#{node['apache']['group']} *"
   cwd install_dir
 end
-
-# setup config file
-template "config.php" do
-  variables(
-      :db_user => database_user,
-      :db_name => database_name,
-      :db_password => database_passsword,
-      :url => node['tt-rss']['url']
-  )
-
-  owner node['apache']['user']
-  group node['apache']['group']
-  mode 0600
-
-  path "#{install_dir}/config.php"
-
-  action :create
-end
-
-# setup database scheme
-mysql_database database_name do
-  connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
-  sql { ::File.open("#{install_dir}/schema/ttrss_schema_mysql.sql").read }
-  action :query
-end
