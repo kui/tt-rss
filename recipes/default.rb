@@ -39,17 +39,17 @@ database_user      = node['tt-rss']['database']['user']
 database_passsword = node['tt-rss']['database']['password']
 
 mysql_database database_name do
-  connection ({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+  connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
   action :create
 end
 
 mysql_database database_name do
-  connection ({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+  connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
   action :create
 end
 
 mysql_database_user database_user do
-  connection ({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+  connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
   password database_passsword
   action [:create, :grant]
 end
@@ -100,7 +100,7 @@ end
 
 # setup database scheme
 mysql_database database_name do
-  connection ({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
+  connection({:host => "localhost", :username => 'root', :password => node['mysql']['server_root_password']})
   sql { ::File.open("#{install_dir}/schema/ttrss_schema_mysql.sql").read }
   action :query
 end
